@@ -1,5 +1,6 @@
 package com.example.koplast
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -41,10 +42,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Toast.makeText(requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
-
-                            parentFragmentManager.beginTransaction()
-                                .replace(R.id.fragmentContainerView, HomeFragment())
-                                .commit()
+                            val intent = Intent(requireActivity(), HomeActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish()
                         } else {
                             Toast.makeText(requireContext(), "Login failed!", Toast.LENGTH_SHORT).show()
                         }
