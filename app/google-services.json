@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "337733669840",
+    "project_id": "tegle-88225",
+    "storage_bucket": "tegle-88225.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337733669840:android:65b29bde699557fff05fd5",
+        "android_client_info": {
+          "package_name": "com.example.koplast"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9Z7dbxsY6NjA4OvIud9QkEQiLWNEr6Xg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

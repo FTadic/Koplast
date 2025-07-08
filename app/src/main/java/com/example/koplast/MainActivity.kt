@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,11 +20,17 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val btnRegisterLogin = findViewById<Button>(R.id.btnRegisterLogin)
+        if (savedInstanceState == null) {
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val fragment = if (currentUser != null) {
+                HomeFragment()
+            } else {
+                LoginFragment()
+            }
 
-        btnRegisterLogin.setOnClickListener {
-            val intent = Intent(this, Register::class.java)
-            startActivity(intent)
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, fragment)
+                .commit()
         }
     }
 }
