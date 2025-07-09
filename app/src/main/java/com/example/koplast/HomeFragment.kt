@@ -1,5 +1,6 @@
 package com.example.koplast
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,9 +22,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         btnLogout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            parentFragmentManager.beginTransaction()
+            /*parentFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerView, LoginFragment())
-                .commit()
+                .commit()*/
+
+            // Vrati se na Login ekran (MainActivity)
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            // Očisti backstack da korisnik ne može "nazad" u HomeActivity
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
     }
 }
