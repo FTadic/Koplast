@@ -5,55 +5,76 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class OrderFragment : Fragment(R.layout.fragment_order) {
+    private lateinit var auth : FirebaseAuth
 
-/**
- * A simple [Fragment] subclass.
- * Use the [OrderFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class OrderFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        auth = FirebaseAuth.getInstance()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+        val spKategorije = view.findViewById<Spinner>(R.id.spKategorije)
+        val spArtikli = view.findViewById<Spinner>(R.id.spArtikli)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order, container, false)
-    }
+        val db = FirebaseFirestore.getInstance()
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OrderFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            OrderFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        val kategorijeList = mutableListOf<String>()
+        val kategorijeIds = mutableListOf<String>()
+        val artikliList = mutableListOf<String>()
+
+        db.collection("kategorije")
+            .addSnapshotListener { snapshots, error ->
+                if (error != null || snapshots == null) return@addSnapshotListener
+
+                kategorijeList.clear()
+                kategorijeIds.clear()
+
+                for (doc in snapshots.documents) {
+                    val naziv = doc.getString("naziv") ?: continue
+                    kategorijeList.add(naziv)
+                    kategorijeIds.add(doc.id)
                 }
+
+                val adapterKategorije = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, kategorijeList)
+                adapterKategorije.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spKategorije.adapter = adapterKategorije
             }
+
+        spKategorije.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val kategorijaId = kategorijeIds[position]
+
+                db.collection("artikli")
+                    .whereEqualTo("kategorija", kategorijaId)
+                    .addSnapshotListener { snapshots, error ->
+                        if (error != null || snapshots == null)
+                            return@addSnapshotListener
+
+                        artikliList.clear()
+                        for (doc in snapshots.documents) {
+                            val naziv = doc.getString("naziv") ?: continue
+                            artikliList.add(naziv)
+                        }
+
+                        val adapterArtikli = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, artikliList)
+                        adapterArtikli.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spArtikli.adapter = adapterArtikli
+
+                    }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
     }
 }
