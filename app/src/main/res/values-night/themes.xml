@@ -3,5 +3,7 @@
     <style name="Base.Theme.Koplast" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:colorControlNormal">#FF000000</item>
+        <item name="android:colorControlActivated">#FF000000</item>
     </style>
 </resources>

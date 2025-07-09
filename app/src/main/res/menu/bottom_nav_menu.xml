@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/miHome"
+        android:title="Početna"
+        android:icon="@drawable/ic_home"/>
+
+    <item
+        android:id="@+id/miAdd"
+        android:title="Narudžba"
+        android:icon="@drawable/ic_add"/>
+
+    <item
+        android:id="@+id/miBaza"
+        android:title="Baza"
+        android:icon="@drawable/ic_database"/>
+</menu>
