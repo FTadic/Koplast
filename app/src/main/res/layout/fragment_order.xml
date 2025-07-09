@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderFragment">
+
+
+    <TextView
+        android:id="@+id/tvKategorija"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kategorije"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.33"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <Spinner
+        android:id="@+id/spKategorije"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/tvKategorija"
+        app:layout_constraintTop_toBottomOf="@+id/tvKategorija" />
+
+    <TextView
+        android:id="@+id/tvArtikli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Artikli"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/spKategorije"
+        app:layout_constraintTop_toBottomOf="@+id/spKategorije" />
+
+    <Spinner
+        android:id="@+id/spArtikli"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/tvArtikli"
+        app:layout_constraintTop_toBottomOf="@+id/tvArtikli" />
+
+    <TextView
+        android:id="@+id/tvKolicina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Količina"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/spArtikli"
+        app:layout_constraintTop_toBottomOf="@+id/spArtikli" />
+
+    <Button
+        android:id="@+id/btnTablica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_design_register"
+        android:text="Tablica"
+        android:textAllCaps="false"
+        android:textColor="#2C53A1"
+        tools:layout_editor_absoluteX="106dp"
+        tools:layout_editor_absoluteY="407dp" />
+
+    <Button
+        android:id="@+id/btnDodaj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_design"
+        android:text="Dodaj"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        tools:layout_editor_absoluteX="227dp"
+        tools:layout_editor_absoluteY="407dp" />
+
+    <EditText
+        android:id="@+id/etKolicina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/tvKolicina"
+        app:layout_constraintTop_toBottomOf="@+id/tvKolicina" />
+</androidx.constraintlayout.widget.ConstraintLayout>
