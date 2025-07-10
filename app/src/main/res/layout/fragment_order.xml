@@ -58,25 +58,31 @@
 
     <Button
         android:id="@+id/btnTablica"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/btn_design_register"
         android:text="Tablica"
         android:textAllCaps="false"
         android:textColor="#2C53A1"
-        tools:layout_editor_absoluteX="106dp"
-        tools:layout_editor_absoluteY="407dp" />
+        app:layout_constraintEnd_toStartOf="@+id/btnDodaj"
+        app:layout_constraintStart_toStartOf="@+id/etKolicina"
+        app:layout_constraintTop_toBottomOf="@+id/etKolicina" />
 
     <Button
         android:id="@+id/btnDodaj"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/btn_design"
         android:text="Dodaj"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        tools:layout_editor_absoluteX="227dp"
-        tools:layout_editor_absoluteY="407dp" />
+        app:layout_constraintEnd_toEndOf="@+id/etKolicina"
+        app:layout_constraintStart_toEndOf="@+id/btnTablica"
+        app:layout_constraintTop_toBottomOf="@+id/etKolicina" />
 
     <EditText
         android:id="@+id/etKolicina"

@@ -3,9 +3,7 @@ package com.example.koplast
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -28,7 +26,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         btnRegisterLogin.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, RegisterFragment())
+                .replace(R.id.nav_host_fragment_main, RegisterFragment())
                 .addToBackStack(null)
                 .commit()
         }
@@ -42,7 +40,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Toast.makeText(requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(requireActivity(), HomeActivity::class.java)
+                            val intent = Intent(requireContext(), HomeActivity::class.java)
                             startActivity(intent)
                             requireActivity().finish()
                         } else {

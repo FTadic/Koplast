@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -19,6 +22,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         auth = FirebaseAuth.getInstance()
 
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
+        val btnOrder = view.findViewById<Button>(R.id.btnOrder)
+        val btnDatabase = view.findViewById<Button>(R.id.btnDatabase)
 
         btnLogout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
@@ -31,6 +36,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             // Očisti backstack da korisnik ne može "nazad" u HomeActivity
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+        }
+
+        btnOrder.setOnClickListener {
+            val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+            bottomNav.selectedItemId = R.id.orderFragment
+        }
+
+        btnDatabase.setOnClickListener {
+            val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+            bottomNav.selectedItemId = R.id.databaseFragment
         }
     }
 }
