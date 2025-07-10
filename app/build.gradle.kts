@@ -50,4 +50,7 @@ dependencies {
 
     implementation("com.google.android.material:material:1.12.0")
     implementation ("com.google.firebase:firebase-firestore-ktx:25.0.0")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
 }

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/miHome"
+        android:id="@+id/homeFragment"
         android:title="Početna"
         android:icon="@drawable/ic_home"/>
 
     <item
-        android:id="@+id/miAdd"
+        android:id="@+id/orderFragment"
         android:title="Narudžba"
         android:icon="@drawable/ic_add"/>
 
     <item
-        android:id="@+id/miBaza"
+        android:id="@+id/databaseFragment"
         android:title="Baza"
         android:icon="@drawable/ic_database"/>
 </menu>
