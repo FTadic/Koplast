@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -99,6 +102,12 @@ class OrderFragment : Fragment(R.layout.fragment_order) {
                     }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        val btnTablica = view.findViewById<Button>(R.id.btnTablica)
+
+        btnTablica.setOnClickListener {
+            findNavController().navigate(R.id.action_orderFragment_to_tableFragment)
         }
     }
 }
