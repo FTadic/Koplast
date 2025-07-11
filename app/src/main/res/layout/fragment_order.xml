@@ -46,29 +46,14 @@
         app:layout_constraintStart_toStartOf="@+id/tvArtikli"
         app:layout_constraintTop_toBottomOf="@+id/tvArtikli" />
 
-    <TextView
-        android:id="@+id/tvKolicina"
+    <EditText
+        android:id="@+id/etKolicina"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Količina"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/spArtikli"
-        app:layout_constraintTop_toBottomOf="@+id/spArtikli" />
-
-    <Button
-        android:id="@+id/btnTablica"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/btn_design_register"
-        android:text="Tablica"
-        android:textAllCaps="false"
-        android:textColor="#2C53A1"
-        app:layout_constraintEnd_toStartOf="@+id/btnDodaj"
-        app:layout_constraintStart_toStartOf="@+id/etKolicina"
-        app:layout_constraintTop_toBottomOf="@+id/etKolicina" />
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/tvKolicina"
+        app:layout_constraintTop_toBottomOf="@+id/tvKolicina" />
 
     <Button
         android:id="@+id/btnDodaj"
@@ -84,13 +69,49 @@
         app:layout_constraintStart_toEndOf="@+id/btnTablica"
         app:layout_constraintTop_toBottomOf="@+id/etKolicina" />
 
-    <EditText
-        android:id="@+id/etKolicina"
+    <Button
+        android:id="@+id/btnTablica"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/btn_design_register"
+        android:text="Tablica"
+        android:textAllCaps="false"
+        android:textColor="#2C53A1"
+        app:layout_constraintEnd_toStartOf="@+id/btnDodaj"
+        app:layout_constraintStart_toStartOf="@+id/etKolicina"
+        app:layout_constraintTop_toBottomOf="@+id/etKolicina" />
+
+    <TextView
+        android:id="@+id/tvKolicina"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Količina"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/etCijena"
+        app:layout_constraintTop_toBottomOf="@+id/etCijena" />
+
+    <TextView
+        android:id="@+id/tvCijena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Cijena"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/spArtikli"
+        app:layout_constraintTop_toBottomOf="@+id/spArtikli" />
+
+    <EditText
+        android:id="@+id/etCijena"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/tvKolicina"
-        app:layout_constraintTop_toBottomOf="@+id/tvKolicina" />
+        android:inputType="text"
+        android:focusable="false"
+        android:clickable="false"
+        android:enabled="false"
+        app:layout_constraintStart_toStartOf="@+id/tvCijena"
+        app:layout_constraintTop_toBottomOf="@+id/tvCijena" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,12 @@
 package com.example.koplast
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -20,15 +22,16 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             val currentUser = FirebaseAuth.getInstance().currentUser
-            val fragment = if (currentUser != null) {
-                HomeFragment()
+            if (currentUser != null) {
+                // Korisnik je ulogiran - pokreni HomeActivity i završi MainActivity
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
             } else {
-                LoginFragment()
+                // Nema korisnika - učitaj login/register flow fragment(e) u MainActivity
+                val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_main) as NavHostFragment
+                val navController = navHostFragment.navController
+                navController.navigate(R.id.loginFragment)  // ili tvoj početni fragment u nav_graph_main
             }
-
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment_main, fragment)
-                .commit()
         }
     }
 }
