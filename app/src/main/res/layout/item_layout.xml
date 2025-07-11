@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:gravity="center_vertical"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/tvNaziv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Naziv"
+        android:padding="4dp"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tvKolicina"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Kol."
+        android:gravity="center"
+        android:padding="4dp"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tvJCijena"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="J.cijena"
+        android:gravity="center"
+        android:padding="4dp"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tvUkupno"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Ukupno"
+        android:gravity="center"
+        android:padding="4dp"
+        android:textColor="#000000" />
+
+    <ImageView
+        android:id="@+id/btnDelete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_weight="0"
+        app:srcCompat="@drawable/ic_delete" />
+</LinearLayout>

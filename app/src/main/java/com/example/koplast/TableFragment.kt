@@ -5,55 +5,55 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.setPadding
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [TableFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class TableFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class TableFragment : Fragment(R.layout.fragment_table) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var viewModel: SharedViewModel
+    private lateinit var adapter: MyAdapter
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.materialToolbar)
+        val navController = findNavController()
+        val tvUkupnaCijena = view.findViewById<TextView>(R.id.tvUkupnaCijena)
+        val rootLayout = view.findViewById<View>(R.id.rootTableLayout)
+
+        ViewCompat.setOnApplyWindowInsetsListener(rootLayout) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(0, 0, 0, systemBars.bottom + 200)
+            insets
         }
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_table, container, false)
-    }
+        NavigationUI.setupWithNavController(toolbar, navController)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TableFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TableFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        viewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        adapter = MyAdapter { itemToDelete ->
+            viewModel.removeItem(itemToDelete)
+        }
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+
+        viewModel.items.observe(viewLifecycleOwner) { itemList ->
+            adapter.setItems(itemList.toList())
+
+            val ukupno = itemList.sumOf {
+                it.kolicina * it.jedinicnaCijena
             }
+            tvUkupnaCijena.text = "Ukupno %.2f €".format(ukupno)
+        }
     }
 }

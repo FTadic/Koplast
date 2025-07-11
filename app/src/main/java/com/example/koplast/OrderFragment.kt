@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 class OrderFragment : Fragment(R.layout.fragment_order) {
     private lateinit var auth : FirebaseAuth
 
+    private lateinit var viewModel: SharedViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
@@ -27,6 +30,11 @@ class OrderFragment : Fragment(R.layout.fragment_order) {
         val spKategorije = view.findViewById<Spinner>(R.id.spKategorije)
         val spArtikli = view.findViewById<Spinner>(R.id.spArtikli)
         val etKolicina = view.findViewById<EditText>(R.id.etKolicina)
+
+        val btnDodaj = view.findViewById<Button>(R.id.btnDodaj)
+        val btnTablica = view.findViewById<Button>(R.id.btnTablica)
+
+        viewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
         val db = FirebaseFirestore.getInstance()
 
@@ -104,10 +112,18 @@ class OrderFragment : Fragment(R.layout.fragment_order) {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        val btnTablica = view.findViewById<Button>(R.id.btnTablica)
-
         btnTablica.setOnClickListener {
             findNavController().navigate(R.id.action_orderFragment_to_tableFragment)
+        }
+
+        btnDodaj.setOnClickListener {
+            val category = spArtikli.selectedItem.toString()
+            val text = etKolicina.text.toString()
+
+            if (text.isNotBlank()) {
+                viewModel.addItem(ToDoItem(category, text.toInt(), 0.5))
+                etKolicina.text.clear()
+            }
         }
     }
 }
