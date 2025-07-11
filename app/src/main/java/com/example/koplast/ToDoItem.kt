@@ -14,6 +14,8 @@ class SharedViewModel : ViewModel() {
     private val _items = MutableLiveData<MutableList<ToDoItem>>(mutableListOf())
     val items: LiveData<MutableList<ToDoItem>> = _items
 
+    val artikliDocIds = mutableMapOf<String, String>()
+
     fun addItem(item: ToDoItem) {
         _items.value?.add(item)
         _items.value = _items.value

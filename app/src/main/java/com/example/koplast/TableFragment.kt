@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
@@ -15,6 +16,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class TableFragment : Fragment(R.layout.fragment_table) {
@@ -42,6 +44,27 @@ class TableFragment : Fragment(R.layout.fragment_table) {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         adapter = MyAdapter { itemToDelete ->
+            val db = FirebaseFirestore.getInstance()
+            val artiklId = viewModel.artikliDocIds[itemToDelete.naziv]
+
+            if (artiklId != null) {
+                val artiklRef = db.collection("artikli").document(artiklId)
+                artiklRef.get().addOnSuccessListener { document ->
+                    val trenutnaKolicina = document.getLong("kolicina")?.toInt() ?: 0
+                    val novaKolicina = trenutnaKolicina + itemToDelete.kolicina
+
+                    artiklRef.update("kolicina", novaKolicina)
+                        .addOnSuccessListener {
+                            // Količina uspješno vraćena
+                            Toast.makeText(requireContext(), "Količina vraćena u skladište", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(requireContext(), "Greška pri vraćanju količine", Toast.LENGTH_SHORT).show()
+                        }
+                }
+            }
+
+            // Nakon vraćanja količine, ukloni item iz liste
             viewModel.removeItem(itemToDelete)
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
