@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="16dp"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+    
+    <EditText
+        android:id="@+id/etId"
+        android:hint="Id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ID artikla"/>
+
+    <EditText
+        android:id="@+id/etNaziv"
+        android:hint="Naziv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNaziv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Naziv artikla"/>
+
+    <EditText
+        android:id="@+id/etKategorija"
+        android:hint="Kategorija"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilKategorija"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Kategorija artikla"/>
+
+    <EditText
+        android:id="@+id/etKolicina"
+        android:hint="Količina"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilKolicina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Kolicina artikla"/>
+
+    <EditText
+        android:id="@+id/etCijena"
+        android:hint="Jedinična cijena"
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilCijena"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cijena artikla"/>
+</LinearLayout>
