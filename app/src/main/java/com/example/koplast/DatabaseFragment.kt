@@ -59,9 +59,61 @@ class DatabaseFragment : Fragment(R.layout.fragment_database) {
     }
 
     private fun editArtikl(artikl: Artikl) {
-        // Otvori dijalog ili novu aktivnost za uređivanje
-        Toast.makeText(requireContext(), "Uredi: ${artikl.naziv}", Toast.LENGTH_SHORT).show()
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.edit_artikl_database, null)
+
+        val etNaziv = dialogView.findViewById<EditText>(R.id.etNaziv_Edit)
+        val etKategorija = dialogView.findViewById<EditText>(R.id.etKategorija_Edit)
+        val etKolicina = dialogView.findViewById<EditText>(R.id.etKolicina_Edit)
+        val etCijena = dialogView.findViewById<EditText>(R.id.etCijena_Edit)
+
+        // Postavi postojeće vrijednosti
+        etNaziv.setText(artikl.naziv)
+        etKategorija.setText(artikl.kategorija)
+        etKolicina.setText(artikl.kolicina.toString())
+        etCijena.setText(artikl.cijena.toString())
+
+        val builder = AlertDialog.Builder(requireContext())
+            .setTitle("Uredi artikl")
+            .setView(dialogView)
+            .setPositiveButton("Spremi", null)
+            .setNegativeButton("Odustani", null)
+
+        val dialog = builder.create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val naziv = etNaziv.text.toString().trim()
+                val kategorija = etKategorija.text.toString().trim()
+                val kolicina = etKolicina.text.toString().trim().toIntOrNull()
+                val cijena = etCijena.text.toString().trim().toDoubleOrNull()
+
+                if (naziv.isEmpty() || kategorija.isEmpty() || kolicina == null || cijena == null) {
+                    Toast.makeText(requireContext(), "Sva polja moraju biti ispravno popunjena", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                val db = FirebaseFirestore.getInstance()
+                db.collection("artikli").document(artikl.id)
+                    .update(
+                        mapOf(
+                            "naziv" to naziv,
+                            "kategorija" to kategorija,
+                            "kolicina" to kolicina,
+                            "cijena" to cijena
+                        )
+                    )
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Artikl ažuriran", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Greška pri ažuriranju", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        }
+
+        dialog.show()
     }
+
 
     private fun deleteArtikl(artikl: Artikl) {
         val db = FirebaseFirestore.getInstance()
