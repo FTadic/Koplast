@@ -1,6 +1,7 @@
 package com.example.koplast
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,8 @@ class OrderFragment : Fragment(R.layout.fragment_order) {
         val btnDodaj = view.findViewById<Button>(R.id.btnDodaj)
         val btnTablica = view.findViewById<Button>(R.id.btnTablica)
 
+        Log.d("ARTIKL", "Kategorije: $spKategorije, artikli: $spArtikli, cijena: $etCijena, kolicina: $etKolicina")
+
         viewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
         val db = FirebaseFirestore.getInstance()
@@ -58,9 +61,11 @@ class OrderFragment : Fragment(R.layout.fragment_order) {
                     kategorijeIds.add(doc.id)
                 }
 
-                val adapterKategorije = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, kategorijeList)
-                adapterKategorije.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spKategorije.adapter = adapterKategorije
+                context?.let { ctx ->
+                    val adapterKategorije = ArrayAdapter(ctx, android.R.layout.simple_spinner_item, kategorijeList)
+                    adapterKategorije.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spKategorije.adapter = adapterKategorije
+                }
             }
 
         spKategorije.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -100,9 +105,11 @@ class OrderFragment : Fragment(R.layout.fragment_order) {
                             viewModel.artikliDocIds[naziv] = doc.id
                         }
 
-                        val adapterArtikli = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, artikliList)
-                        adapterArtikli.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        spArtikli.adapter = adapterArtikli
+                        context?.let { ctx ->
+                            val adapterArtikli = ArrayAdapter(ctx, android.R.layout.simple_spinner_item, artikliList)
+                            adapterArtikli.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                            spArtikli.adapter = adapterArtikli
+                        }
 
                         spArtikli.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
@@ -159,7 +166,10 @@ class OrderFragment : Fragment(R.layout.fragment_order) {
                             etKolicina.filters = arrayOf(InputFilterMinMax(0, novaKolicina))
                         }
                         .addOnFailureListener {
-                            Toast.makeText(requireContext(), "Neuspješno ažuriranje količine", Toast.LENGTH_SHORT).show()
+                            context?.let {
+                                Toast.makeText(it, "Neuspješno ažuriranje količine", Toast.LENGTH_SHORT).show()
+                            }
+
                         }
                 }
 

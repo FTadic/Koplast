@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DatabaseFragment">
+    tools:context=".DatabaseFragment"
+    android:paddingBottom="80dp">
 
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -12,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#2C53A1"
+        app:title="Baza podataka"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -48,14 +50,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginRight="16dp"
             android:layout_marginLeft="5dp"
             android:gravity="left"
             android:text="Količina" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginRight="45dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.2"
             android:gravity="left"
@@ -71,4 +72,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llHeaderRow" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabDodajArtikl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="#2C53A1"
+        android:contentDescription="Dodaj artikl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add"
+        app:tint="@android:color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

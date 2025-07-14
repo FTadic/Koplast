@@ -23,6 +23,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.File
 import java.io.FileOutputStream
@@ -91,7 +92,7 @@ class TableFragment : Fragment(R.layout.fragment_table) {
         val btnIzradiRacun = view.findViewById<Button>(R.id.btnIzradiRacun)
 
         btnIzradiRacun.setOnClickListener {
-            val input = EditText(requireContext())
+            /*val input = EditText(requireContext())
             input.hint = "Unesite ime kupca"
 
             AlertDialog.Builder(requireContext())
@@ -107,7 +108,41 @@ class TableFragment : Fragment(R.layout.fragment_table) {
                     }
                 }
                 .setNegativeButton("Odustani", null)
-                .show()
+                .show()*/
+
+
+            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.unos_kupca_pdf, null)
+            val builder = AlertDialog.Builder(requireContext())
+                .setTitle("Unesi kupca")
+                .setView(dialogView)
+                .setPositiveButton("Unesi", null)
+                .setNegativeButton("Odustani", null)
+
+            val etImeKupca = dialogView.findViewById<EditText>(R.id.etImeKupca)
+            val tilKupac = dialogView.findViewById<TextInputLayout>(R.id.tilKupac)
+
+            val dialog = builder.create()
+            dialog.setOnShowListener {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                    tilKupac.error = null
+
+                    val imeKupca = etImeKupca.text.toString().trim()
+
+                    var valid = true
+
+                    if (imeKupca.isEmpty()) {
+                        tilKupac.error = "Ime kupca je obavezno"
+                        valid = false
+                    } else {
+                        val items = viewModel.items.value.orEmpty()
+                        generateAndSharePDF(items, imeKupca)
+                        dialog.dismiss()
+                    }
+
+                    if (!valid) return@setOnClickListener
+                }
+            }
+            dialog.show()
 
             /*viewModel.items.value?.let {
                 generateAndSharePDF(it.toList(), imeKupca)
@@ -193,6 +228,7 @@ class TableFragment : Fragment(R.layout.fragment_table) {
         }
 
         startActivity(Intent.createChooser(shareIntent, "Pošalji PDF"))
+        viewModel.clearAllItems()
     }
 
 }

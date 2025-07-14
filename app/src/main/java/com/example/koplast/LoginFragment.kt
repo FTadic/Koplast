@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -25,10 +26,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val etPasswordLogin = view.findViewById<EditText>(R.id.etPasswordLogin)
 
         btnRegisterLogin.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment_main, RegisterFragment())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
         btnLogin.setOnClickListener {

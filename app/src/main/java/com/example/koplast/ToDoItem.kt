@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 
 data class ToDoItem (
     val naziv: String,
-    val kolicina: Int,
-    val jedinicnaCijena: Double
+    var kolicina: Int,
+    var jedinicnaCijena: Double
 )
 
 class SharedViewModel : ViewModel() {
@@ -17,13 +17,27 @@ class SharedViewModel : ViewModel() {
     val artikliDocIds = mutableMapOf<String, String>()
 
     fun addItem(item: ToDoItem) {
-        _items.value?.add(item)
-        _items.value = _items.value
+        val currentList = _items.value ?: mutableListOf()
+        val existingItem = currentList.find { it.naziv == item.naziv }
+
+        if (existingItem != null) {
+            // Ažuriraj količinu i zbroji cijenu
+            existingItem.kolicina += item.kolicina
+            existingItem.jedinicnaCijena += item.jedinicnaCijena
+        } else {
+            currentList.add(item)
+        }
+
+        _items.value = currentList
     }
 
     fun removeItem(item: ToDoItem) {
         _items.value = _items.value?.toMutableList()?.apply {
             remove(item)
         }
+    }
+
+    fun clearAllItems() {
+        _items.value = mutableListOf()
     }
 }
