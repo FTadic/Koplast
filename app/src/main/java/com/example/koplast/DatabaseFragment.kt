@@ -82,7 +82,7 @@ class DatabaseFragment : Fragment(R.layout.fragment_database) {
         dialog.setOnShowListener {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val naziv = etNaziv.text.toString().trim()
-                val kategorija = etKategorija.text.toString().trim()
+                val kategorija = etKategorija.text.toString().trim().lowercase()
                 val kolicina = etKolicina.text.toString().trim().toIntOrNull()
                 val cijena = etCijena.text.toString().trim().toDoubleOrNull()
 

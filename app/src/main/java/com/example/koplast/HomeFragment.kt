@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,6 +25,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
         val btnOrder = view.findViewById<Button>(R.id.btnOrder)
         val btnDatabase = view.findViewById<Button>(R.id.btnDatabase)
+
+        val tvUser = view.findViewById<TextView>(R.id.tvUser)
+
+        val user = FirebaseAuth.getInstance().currentUser
+
+        if (user != null) {
+            tvUser.text = user.email
+        }
 
         btnLogout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
